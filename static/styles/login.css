@@ -1,0 +1,71 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+    padding: 30px;
+    font-size: 30px;
+    text-align: center;
+    color: rgb(66, 63, 48);
+}
+
+body {
+    background-color: antiquewhite;
+    background-image: url('../images/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.form_box {
+    position: relative;
+    left: 38%;
+    padding: 15px;
+    height: 350px;
+    width: 300px;
+    margin-top: 5%;
+    background-color: rgb(209, 205, 205);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid seashell;
+    border-radius: 5%;
+    text-align: center;
+}
+
+.button {
+    padding: 13px;
+    margin-top: 15px;
+    width: 150px;
+    font-size: medium;
+    border-radius: 8%;
+    color: rgb(65, 63, 52);
+    transition: all 0.3s ease;
+}
+
+.button:hover {
+    font-size: large;
+    background-color: rgb(227, 202, 170);
+}
+
+.form_box p {
+    margin-bottom: 10px;
+    margin-top: 5px;
+    color: rgb(65, 63, 52);
+    font-size: large;
+    font-weight: bolder;
+}
+
+.input {
+    padding: 8px;
+    border: 2px solid seashell;
+    border-radius: 8%;
+    font-weight: bold;
+}
