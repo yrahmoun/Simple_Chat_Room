@@ -1,5 +1,5 @@
 from flask import Flask, session, redirect, url_for, request, render_template
-from flask_socletio import SocketIO
+from flask_socketio import SocketIO
 
 app = Flask(__name__)
 app.secret_key = "*=secret_key=*"
@@ -26,9 +26,32 @@ def login():
         username = request.form["username"]
         session["username"] = username
         return redirect(url_for("chat"))
-    else
+    else:
         return render_template("index.html")
+
+@socketio.on("connect")
+def welcome():
+    """sends a welcome message yo the user who joined the room"""
+    username = session.get('username')
+    message = "User " + username + " has joined the room!"
+    socketio.emit("message", message)
+
+@socketio.on("message")
+def handle_message(message):
+    """handles the message sent by the client and sends it back"""
+    username = session.get("username")
+    message = username + ": " + message
+    socketio.emit("message", message)
+
+@app.route("/logout")
+def logout():
+    """handles user logging out"""
+    username = session.get("username")
+    message = "User " + username + " has left the room!"
+    socketio.emit("message", message)
+    session.pop("username", None)
+    return redirect(url_for('login'))
 
 
 if __name__ == "__main__":
-    socketio.run(app, debug=true)
+    socketio.run(app, debug=True, allow_unsafe_werkzeug=True)

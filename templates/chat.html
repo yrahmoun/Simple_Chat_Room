@@ -4,14 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../static/styles/chat.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="../static/scripts/chat.js"></script>
     <title>Simple Chat Room</title>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="title">
+            <h1>Simple Chat Room</h1>
+        </div>
+        <div class="links">
+            <a href="{{ url_for('logout') }}"><button class="logout">Logout</button></a>
+        </div>
+    </nav>
     <div class="chatbox">
         <div class="chat"></div>
         <div class="inputbox">
             <textarea class="input" placeholder="Type here..."></textarea>
-            <button class="button">Send</button>
+            <div class="button_box">
+                <button class="button">Send</button>
+            </div>
         </div>
     </div>
 </body>

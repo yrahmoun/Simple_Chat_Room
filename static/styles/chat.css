@@ -16,10 +16,10 @@ body {
 }
 
 .chatbox {
-    height: 90vh;
+    height: 75vh;
     width: 90%;
     border: 2px solid rgb(151, 125, 63);
-    margin: 5vh auto;
+    margin: 4vh auto;
     display: flex;
     flex-direction: column;
 }
@@ -27,6 +27,9 @@ body {
 .chat {
     height: 80%;
     background-color: aliceblue;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    word-wrap: break-word;
 }
 
 .inputbox {
@@ -42,14 +45,57 @@ body {
     overflow-y: hidden;
 }
 
+.button_box {
+    width: 15%;
+    height: 20vh;
+}
+
 .button {
-    width: 20%;
-    font-size: 300%;
+    width: 100%;
+    height: 100%;
+    font-size: 25px;
     color: rgb(65, 63, 52);
     background-color: rgb(227, 202, 170);
     transition: all 0.3s ease;
 }
 
+.navbar {
+    height: 90px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1.5em;
+}
+
 .button:hover {
-    font-size: 320%;
+    font-size: 1.80em;
+}
+
+.message {
+    background-color: bisque;
+    margin-top: 1%;
+    margin-left: 1%;
+    padding: 1.2em;
+    width: 60%;
+}
+
+.links {
+    height: 70px;
+}
+
+.logout {
+    height: 100%;
+    padding: 0 1em;
+    font-size: 1.1em;
+    text-align: top;
+    background-color: rgb(224, 186, 136);
+    transition: all 0.3s ease;   
+}
+
+.logout:hover {
+    font-size: 1.2em;
+}
+
+.title {
+    color: rgb(66, 63, 48);
 }
