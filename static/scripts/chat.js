@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    let socket = io.connect('http://127.0.0.1:5000');
+    let socket = io();
 
     socket.on("message", function(message) {
         $('.chat').append("<p class='message'>" + message + "</p>");
