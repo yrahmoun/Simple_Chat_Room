@@ -3,8 +3,21 @@ from flask_socketio import SocketIO
 
 app = Flask(__name__)
 app.secret_key = "*=secret_key=*"
-socketio = SocketIO(app, cors_allowed_origins='http://54.236.44.155')
+socketio = SocketIO(app, cors_allowed_origins=
+                    ['http://54.236.44.155', 'http://127.0.0.1:5000'])
 
+
+
+@app.route('/register', methods=["POST", "GET"])
+def register():
+    """handles user registration"""
+    if request.method == "POST":
+        username = request.form["username"]
+        email = request.form["email"]
+        password = request.form["password"]
+        return redirect(url_for("login"))
+    else:
+        return render_template("register.html")
 
 @app.route('/chat')
 def chat():
