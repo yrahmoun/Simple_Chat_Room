@@ -47,21 +47,23 @@ def welcome():
     """sends a welcome message yo the user who joined the room"""
     username = session.get('username')
     message = "User " + username + " has joined the room!"
-    socketio.emit("message", message)
+    socketio.emit("server_message", message)
 
 @socketio.on("message")
 def handle_message(message):
     """handles the message sent by the client and sends it back"""
     username = session.get("username")
+    my_message = "YOU: " + message
+    socketio.emit('my_message', my_message, room=request.sid)
     message = username + ": " + message
-    socketio.emit("message", message)
+    socketio.emit("message", message, include_self=False)
 
 @app.route("/logout")
 def logout():
     """handles user logging out"""
     username = session.get("username")
     message = "User " + username + " has left the room!"
-    socketio.emit("message", message)
+    socketio.emit("server_message", message)
     session.pop("username", None)
     return redirect(url_for('login'))
 
