@@ -28,12 +28,13 @@ def register():
         existing_user = Users.query.filter_by(username=username).first()
         existing_email = Users.query.filter_by(email=email).first()
         if existing_user:
-            flash('User already exists')
-            return "oh no ! :("
+            return render_template("register.html", username_error=True)
         elif existing_email:
-            flash('User already exists')
-            return render_template("register.html")
+            return render_template("register.html", email_error=True)
         else:
+            new_user = Users(username=username, email=email, password=password)
+            db.session.add(new_user)
+            db.session.commit()
             return redirect(url_for("login"))
     else:
         return render_template("register.html")
@@ -56,8 +57,13 @@ def login():
         return redirect(url_for("chat"))
     if request.method == "POST":
         username = request.form["username"]
-        session["username"] = username
-        return redirect(url_for("chat"))
+        password = request.form["password"]
+        user = Users.query.filter_by(username=username).first()
+        if not user or user.password != password:
+            return render_template("index.html", login_error=True)
+        else:
+            session["username"] = username
+            return redirect(url_for("chat"))
     else:
         return render_template("index.html")
 

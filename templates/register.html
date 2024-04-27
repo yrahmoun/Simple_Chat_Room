@@ -14,11 +14,21 @@
         <div class="form_box">
             <form action="#" method="post">
                 <h1>register</h1>
-                <p>Username:</p>
+                <label class="label">Username:</label>
+                {% if username_error %}
+                <div class="error_message">
+                    <p>Username already exists!</p>
+                </div>
+                {% endif %}
                 <input type="text" name="username" class="input" placeholder="username" required>
-                <p>Email:</p>
+                <label class="label">Email:</label>
+                {% if email_error %}
+                <div class="error_box">
+                    <p class="error_message">Email already exists!</p>
+                </div>
+                {% endif %}
                 <input type="text" name="email" class="input" placeholder="example@gmail.com" required>
-                <p>Password:</p>
+                <label class="label">Password:</label>
                 <input type="password" name="password" class="input" placeholder="password" required></br>
                 <div class="login_button">
                     <input type="submit" class="button" value="register">

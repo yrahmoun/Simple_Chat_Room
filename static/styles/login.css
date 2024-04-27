@@ -20,7 +20,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(100dvh - 70px);
+    height: calc(100dvh - 65px);
 }
 
 .form_box {
@@ -45,7 +45,8 @@ form h1 {
     color: #333;
 }
 
-form p {
+.label {
+    display: block;
     text-align: left;
     margin-bottom: 5px;
     font-size: 20px;
@@ -75,10 +76,11 @@ form p {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    /*margin-right: 10px;*/
 }
 
 .register {
+    font-size: 20px;
+    color: #333;
     text-align: center;
 }
 
@@ -88,6 +90,12 @@ form p {
 
 .button:hover {
     background-color: #555;
+}
+
+.error_message {
+    font-size: 20px;
+    text-align: center;
+    color: red;
 }
 
 @media screen and (min-width: 768px) {

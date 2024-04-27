@@ -14,9 +14,14 @@
         <div class="form_box">
             <form action="#" method="post">
                 <h1>login</h1>
-                <p>Username:</p>
+                {% if login_error %}
+                <div class="error_message">
+                    <p>Invalid username or password</p>
+                </div>
+                {% endif %}
+                <label class="label">Username:</label>
                 <input type="text" name="username" class="input" placeholder="username" required>
-                <p>Password:</p>
+                <label class="label">Password:</label>
                 <input type="password" name="password" class="input" placeholder="password" required></br>
                 <div class="login_button">
                     <input type="submit" class="button" value="login">
