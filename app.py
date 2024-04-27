@@ -1,12 +1,22 @@
 from flask import Flask, session, redirect, url_for, request, render_template
+from flask import flash
 from flask_socketio import SocketIO
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.secret_key = "*=secret_key=*"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./chat.db'
+db = SQLAlchemy(app)
 socketio = SocketIO(app, cors_allowed_origins=
                     ['http://54.236.44.155', 'http://127.0.0.1:5000'])
 
 
+class Users(db.Model):
+    """database for the users"""
+    id = db.Column(db.Integer, primary_key=True) 
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    email = db.Column(db.String(50), unique=True, nullable=False)
+    password = db.Column(db.String(50), nullable=False)
 
 @app.route('/register', methods=["POST", "GET"])
 def register():
@@ -15,7 +25,16 @@ def register():
         username = request.form["username"]
         email = request.form["email"]
         password = request.form["password"]
-        return redirect(url_for("login"))
+        existing_user = Users.query.filter_by(username=username).first()
+        existing_email = Users.query.filter_by(email=email).first()
+        if existing_user:
+            flash('User already exists')
+            return "oh no ! :("
+        elif existing_email:
+            flash('User already exists')
+            return render_template("register.html")
+        else:
+            return redirect(url_for("login"))
     else:
         return render_template("register.html")
 
@@ -69,4 +88,6 @@ def logout():
 
 
 if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
     socketio.run(app, debug=True, allow_unsafe_werkzeug=True)

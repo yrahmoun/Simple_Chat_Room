@@ -2,15 +2,24 @@ $(document).ready(function() {
     let socket = io();
 
     socket.on("my_message", function(message) {
-        $('.chat').append("<div class='my_message'><p class='message'>" + message + "</p></div>");
+        let div = $('<div>').addClass('my_message');
+        let p = $('<p>').addClass('message');
+        p.text(message);
+        div.append(p)
+        $('.chat').append(div);
     });
 
     socket.on("message", function(message) {
-        $('.chat').append("<p class='message'>" + message + "</p>");
+        let p = $('<p>').addClass('message');
+        p.text(message);
+        $('.chat').append(p);
     });
 
     socket.on("server_message", function(message) {
-        $('.chat').append("<div class='server_message'><p>" + message + "</p></div>");
+        let div = $('<div>').addClass('server_message');
+        let p = $('<p>').text(message);
+        div.append(p)
+        $('.chat').append(div);
     })
 
     $(".button").click(function() {
