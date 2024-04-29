@@ -1,18 +1,31 @@
 $(document).ready(function() {
     let socket = io();
 
-    socket.on("my_message", function(message) {
+    socket.on("my_message", function(data) {
         let div = $('<div>').addClass('my_message');
+        let picdiv = $('<div>').addClass('picbox');
         let p = $('<p>').addClass('message');
-        p.text(message);
+        p.text(data.message);
+        console.log(data.pic);
+        let img = $('<img>').attr('src', 'static/images/' + data.pic);
+        img.addClass('profile_pic');
+        picdiv.append(img);
+        div.append(picdiv);
         div.append(p)
         $('.chat').append(div);
     });
 
-    socket.on("message", function(message) {
+    socket.on("message", function(data) {
+        let div = $('<div>').addClass('user_message');
+        let picdiv = $('<div>').addClass('picbox');
         let p = $('<p>').addClass('message');
-        p.text(message);
-        $('.chat').append(p);
+        p.text(data.message);
+        let img = $('<img>').attr('src', 'static/images/' + data.pic);
+        img.addClass('profile_pic');
+        picdiv.append(img);
+        div.append(picdiv);
+        div.append(p)
+        $('.chat').append(div);
     });
 
     socket.on("server_message", function(message) {

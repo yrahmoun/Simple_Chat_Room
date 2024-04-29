@@ -1,0 +1,35 @@
+.navbar {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.links .home {
+    background-color: #555;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.links .home:hover {
+    background-color: #777;
+}
+
+
+.form_box {
+    height: 90%;
+    justify-content: flex-start;
+    padding-top: 20px;
+}
+
+.login_button {
+    margin-top: 5%;  
+}
+

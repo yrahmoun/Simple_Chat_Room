@@ -4,15 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../static/styles/login.css">
+    <link rel="stylesheet" type="text/css" href="../static/styles/register.css">
     <title>Register Page</title>
 </head>
 <body>
-    <div class="header">
-        <h1>Simple Chat Room</h1>
-    </div>
+    <nav class="navbar">
+        <div class="title">
+            <h1>Simple Chat Room</h1>
+        </div>
+        <div class="links">
+            <a href="{{ url_for('login') }}"><button class="home">Home</button></a>
+        </div>
+    </nav>
     <div class="wrapper">
         <div class="form_box">
-            <form action="#" method="post">
+            <form action="#" method="post" enctype="multipart/form-data">
                 <h1>register</h1>
                 <label class="label">Username:</label>
                 {% if username_error %}
@@ -30,6 +36,8 @@
                 <input type="text" name="email" class="input" placeholder="example@gmail.com" required>
                 <label class="label">Password:</label>
                 <input type="password" name="password" class="input" placeholder="password" required></br>
+                <label class="label">Choose a profile pic:</label>
+                <input type="file" name="profile_pic" accept="image/*">
                 <div class="login_button">
                     <input type="submit" class="button" value="register">
                 </div>
