@@ -12,6 +12,7 @@ app = Flask(__name__)
 app.secret_key = "*=secret_key=*"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./chat.db'
 app.config['UPLOAD_FOLDER'] = 'static/images'
+app.config['MAX_CONTENT_LENGTH'] = 32 * 5000 * 5000
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 socketio = SocketIO(app, cors_allowed_origins=
