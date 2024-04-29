@@ -1,6 +1,11 @@
 $(document).ready(function() {
     let socket = io();
 
+    function scrollToBottom() {
+        var chatDiv = $('.chat');
+        chatDiv.scrollTop(chatDiv.prop("scrollHeight"));
+    }
+
     socket.on("my_message", function(data) {
         let div = $('<div>').addClass('my_message');
         let picdiv = $('<div>').addClass('picbox');
@@ -13,6 +18,7 @@ $(document).ready(function() {
         div.append(picdiv);
         div.append(p)
         $('.chat').append(div);
+        scrollToBottom();
     });
 
     socket.on("message", function(data) {
@@ -26,6 +32,7 @@ $(document).ready(function() {
         div.append(picdiv);
         div.append(p)
         $('.chat').append(div);
+        scrollToBottom();
     });
 
     socket.on("server_message", function(message) {
