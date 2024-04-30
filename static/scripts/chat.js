@@ -6,6 +6,8 @@ $(document).ready(function() {
         chatDiv.scrollTop(chatDiv.prop("scrollHeight"));
     }
 
+    
+
     socket.on("my_message", function(data) {
         let div = $('<div>').addClass('my_message');
         let picdiv = $('<div>').addClass('picbox');
@@ -41,6 +43,8 @@ $(document).ready(function() {
         div.append(p)
         $('.chat').append(div);
     })
+
+    scrollToBottom();
 
     $(".button").click(function() {
         let message = $(".input");

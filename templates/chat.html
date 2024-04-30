@@ -19,7 +19,16 @@
         </div>
     </nav>
     <div class="chatbox">
-        <div class="chat"></div>
+        <div class="chat">
+        {% for message in messages %}
+            <div class="{{ 'my_message' if message.user.username == username else 'user_message'}}">
+                <div class="picbox">
+                    <img class="profile_pic" src="{{ url_for('static', filename='images/' + (message.user.profile_pic or 'default.png')) }}">
+                </div>
+                <p class="message">{{ 'YOU' if message.user.username == username else message.user.username }}: {{ message.content }}</p>
+            </div>
+        {% endfor %}
+        </div>
         <div class="inputbox">
             <textarea class="input" placeholder="Type here..."></textarea>
             <div class="button_box">

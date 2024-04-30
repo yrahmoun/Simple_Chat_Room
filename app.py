@@ -6,6 +6,7 @@ from flask_migrate import Migrate
 import os
 from werkzeug.utils import secure_filename
 from uuid import uuid4
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -32,6 +33,16 @@ class Users(db.Model):
     password = db.Column(db.String(50), nullable=False)
     profile_pic = db.Column(db.String(100), nullable= True)
 
+class Message(db.Model):
+    """Database model for chat messages."""
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    user = db.relationship('Users', backref=db.backref('messages', lazy=True))
+
+
+
 
 @app.route('/register', methods=["POST", "GET"])
 def register():
@@ -46,7 +57,7 @@ def register():
         if file.filename != '' and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file_id = str(uuid4())
-            filenaùe = file_id + '_' + filename
+            filename = file_id + '_' + filename
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         else:
             filename = 'default.png'
@@ -68,7 +79,8 @@ def chat():
     """ renders the chat page """
     username = session.get("username")
     if username:
-        return render_template("chat.html")
+        messages = Message.query.order_by(Message.timestamp.asc()).all()
+        return render_template("chat.html", username=username, messages=messages)
     else:
         return redirect(url_for("login"))
 
@@ -108,8 +120,11 @@ def handle_message(message):
         user_pic = 'default.png'
     my_message = "YOU: " + message
     socketio.emit('my_message', {'message':my_message, 'pic': user_pic}, room=request.sid)
-    message = username + ": " + message
-    socketio.emit("message", {'message':message, 'pic': user_pic}, include_self=False)
+    user_message = username + ": " + message
+    new_message = Message(user_id=user.id, content=message)
+    db.session.add(new_message)
+    db.session.commit()
+    socketio.emit("message", {'message':user_message, 'pic': user_pic}, include_self=False)
 
 @app.route("/logout")
 def logout():
@@ -119,6 +134,14 @@ def logout():
     socketio.emit("server_message", message)
     session.pop("username", None)
     return redirect(url_for('login'))
+
+@app.route("/messages")
+def chat_history():
+    """displays the chat history"""
+    messages = Message.query.order_by(Message.timestamp.asc()).all()
+    username = session.get("username")
+    return render_template("chat_history.html", username=username, messages=messages)
+
 
 
 if __name__ == "__main__":
