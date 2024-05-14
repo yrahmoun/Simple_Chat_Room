@@ -1,2 +1,3 @@
 instance/
-migrations/ 
+migrations/
+__pycache__/ 

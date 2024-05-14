@@ -1,5 +1,4 @@
 from flask import Flask, session, redirect, url_for, request, render_template
-from flask import flash
 from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -21,6 +20,7 @@ socketio = SocketIO(app, cors_allowed_origins=['http://54.236.44.155',
 
 
 def allowed_file(filename):
+    """returns file extension type of the image uploaded"""
     parts = filename.split('.')
     return parts[-1].lower() in {'png', 'jpg', 'jpeg'}
 
@@ -141,15 +141,6 @@ def logout():
     socketio.emit("server_message", message)
     session.pop("username", None)
     return redirect(url_for('login'))
-
-
-@app.route("/messages")
-def chat_history():
-    """displays the chat history"""
-    messages = Message.query.order_by(Message.timestamp.asc()).all()
-    username = session.get("username")
-    return render_template("chat_history.html",
-                           username=username, messages=messages)
 
 
 if __name__ == "__main__":
